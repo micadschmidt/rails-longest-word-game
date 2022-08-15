@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
- .letters {
+.letters {
   padding: 10px 0;
 }
 

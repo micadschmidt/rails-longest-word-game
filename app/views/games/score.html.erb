@@ -1,13 +1,16 @@
 <div class="container">
-  <h1>Result</h1>
-  <% if @user_grid %>
-    <% if @dictonary %>
-      <p>"Congratulations <%= @answer %> is a valid English word"</p>
+  <div class="list-group">
+    <h1>Result</h1>
+    <% if @included %>
+      <% if @english_word %>
+        <p>"Congratulations <strong><%= @word %></strong> is a valid English word"</p>
+      <% else %>
+        <p>"Sorry but <strong><%= @word %></strong> does not seem to be a valid English word"</p>
+      <% end %>
     <% else %>
-      <p>"Sorry but <%= @answer %> does not seem to be a valid English word"</p>
+      <p>"Sorry but <strong><%= @word %></strong> cant be built out of <strong><%= @letters %></strong>"
     <% end %>
-  <% else %>
-    <p>"Sorry but <%= @answer %> cant be built out of <%= @letters %>"
-  <% end %>
-  <%= link_to "Play another time", new_path %>
+    <h2></h2>
+    <%= link_to "Play another time", new_path %>
+  </div>
 </div>

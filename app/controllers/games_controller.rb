@@ -11,25 +11,22 @@ class GamesController < ApplicationController
   # The method returns true if the block never returns false or nil
 
   def score
-    @grid = params[:grid]
-    @answer = params[:word]
-    @dictonary = english_word(@answer)
-    @user_grid = letter_in_grid(@answer, @grid)
-    # if dictonary || user_grid
-    #   "Congratulations #{@answer} is a valid English word"
-    # end
+    @letters = params[:letters].split
+    @word = (params[:word] || "").upcase
+    @english_word = english_word?(@word)
+    @included = included?(@word, @letters)
   end
 
   private
 
-  def english_word(answer)
-    url = "https://wagon-dictionary.herokuapp.com/#{answer}"
-    word_dictionary = URI.open(url).read
-    word = JSON.parse(word_dictionary)
-    word['found']
+  def included?(word, letters)
+    word.chars.all? { |letter| word.count(letter) <= letters.count(letter) }
   end
 
-  def letter_in_grid(answer, grid)
-    answer.chars.all? { |letter| answer.count(letter) <= grid.count(letter) }
+  def english_word?(word)
+    response = URI.open("https://wagon-dictionary.herokuapp.com/#{word}")
+    json = JSON.parse(response.read)
+    json['found']
   end
+
 end
